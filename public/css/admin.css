@@ -1,0 +1,24 @@
+#logo_img {
+    border-width: 0px;
+    width: 120px;
+    height: 40px;
+}
+.search_size{
+    width:100%;
+    height:50px;
+}
+.row_container{
+    margin-bottom:15px;
+}
+.sign_btn{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+.sign_input_container{
+    margin-right:10px
+}
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
