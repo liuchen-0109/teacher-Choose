@@ -18,8 +18,6 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/adminlte/dist/css/skins/_all-skins.min.css">
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="/adminlte/bower_components/morris.js/morris.css">
     <!-- jvectormap -->
     <link rel="stylesheet" href="/adminlte/bower_components/jvectormap/jquery-jvectormap.css">
     <!-- Date Picker -->
@@ -66,8 +64,6 @@
 <!-- jvectormap -->
 <script src="/adminlte/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="/adminlte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="/adminlte/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
 <script src="/adminlte/bower_components/moment/min/moment.min.js"></script>
 <script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -81,10 +77,6 @@
 <script src="/adminlte/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="/adminlte/dist/js/pages/dashboard.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/adminlte/dist/js/demo.js"></script>
 <!--引入JS-->
 <script type="text/javascript" src="/WebUploader/webuploader.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>

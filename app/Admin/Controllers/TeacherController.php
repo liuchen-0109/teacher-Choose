@@ -18,7 +18,7 @@ class TeacherController extends Controller
 
         //是否进行筛选
         $word = $request->word ? $request->word : "";
-        $compus = $request->compus ? $request->compus : "";
+        $campus = $request->campus ? $request->campus : "";
         $subject = $request->subject ? $request->subject : "";
         if ($word) {
             if (is_numeric($word)) {
@@ -27,10 +27,10 @@ class TeacherController extends Controller
                 $collection->where('name', 'like', '%' . $word . "%");
             }
         }
-        if ($compus) $collection->where('compus', '=', $compus);
+        if ($campus) $collection->where('campus', '=', $campus);
         if ($subject) $collection->where('subject', '=', $subject);
         $teachers = $collection->paginate(10);
-        return view('/admin/teacher/index', compact('teachers', 'word', 'compus', 'subject'));
+        return view('/admin/teacher/index', compact('teachers', 'word', 'campus', 'subject'));
     }
 
     /**
@@ -105,7 +105,7 @@ class TeacherController extends Controller
         if (!$request['job_number']) json('工号不能为空');
         if (!$request['subject']) json('科目不能为空');
         if (!$request['mobile']) json('手机不能为空');
-        if (!$request['compus']) json('校区不能为空');
+        if (!$request['campus']) json('校区不能为空');
         if (!$request['email']) json('邮箱不能为空');
         if (!$request['work_status']) json('岗位性质不能为空');
         if (!$request['level']) json('级别不能为空');

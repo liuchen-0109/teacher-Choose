@@ -129,7 +129,7 @@ function edit(id) {
             $("select[name='subject']").val(data.subject);
             $("input[name='emergency_contact']").val(data.emergency_contact);
             $("input[name='contact_mobile']").val(data.contact_mobile);
-            $("select[name='compus']").val(data.compus);
+            $("select[name='campus']").val(data.campus);
             $("input[name='address']").val(data.address);
             $("select[name='sex']").val(data.sex);
             $("input[name='age']").val(data.age);

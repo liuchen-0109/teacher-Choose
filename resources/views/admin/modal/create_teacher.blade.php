@@ -175,7 +175,7 @@
                         <div class="row row_container">
                             <div class="col-md-12">
                                 <label>所属校区</label>
-                                <select name="compus" class="form-control">
+                                <select name="campus" class="form-control">
                                     <option>选择校区</option>
                                     <option>2</option>
                                     <option>3</option>

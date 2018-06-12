@@ -8,7 +8,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <select class="form-control select2 select2-hidden-accessible search_size"
-                                    tabindex="-1" aria-hidden="true" name="compus">
+                                    tabindex="-1" aria-hidden="true" name="campus">
                                 <option value="">选择学校</option>
                                 <option>Alaska</option>
                                 <option>California</option>
@@ -47,7 +47,7 @@
                             <!-- /.form-group -->
                         </div>
                     </div>
-                    @if($subject || $compus || $word)
+                    @if($subject || $campus || $word)
                         <a href="/admin/teacher/index" class="text-info">重置条件</a>
                     @endif()
                     <button class="btn btn-default btn-lg" id="create_btn" type="button" style="margin-left:10px">新增教师</button>
@@ -74,7 +74,7 @@
                                         <td>{{$teacher->job_number}}</td>
                                         <td>{{$teacher->subject}}</td>
                                         <td>{{$teacher->mobile}}</td>
-                                        <td>{{$teacher->compus}}</td>
+                                        <td>{{$teacher->campus}}</td>
                                         <td>
                                             @if($teacher->status == 1)
                                                 启用
