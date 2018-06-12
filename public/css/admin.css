@@ -18,10 +18,7 @@
 .sign_input_container{
     margin-right:10px
 }
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0;
-}
+
 #mask{position: fixed;z-index: 999999;top: 0;bottom: 0;left: 0;right: 0;display: none;}
 #mask .loading{padding: 10px 15px;background: #333;opacity: 0.75;text-align: center;color: #FFF;line-height: 23px;position: fixed;left:0;right: 0;bottom: 0;top: 0;width: 120px;height: 65px;z-index: 999999;margin: auto;border-radius: 4px;}
 
@@ -55,4 +52,8 @@ input::-webkit-inner-spin-button {
     position: absolute;
     top: -11px;
     right: -8px;
+}
+
+#create_modal .col-md-2 .input-group{
+    width:100%
 }

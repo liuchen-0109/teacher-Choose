@@ -68,7 +68,6 @@ function upload_photo() {
 
     // 当有文件添加进来的时候
     photo_upload.on('fileQueued', function (file) {
-        ;
         // $list为容器jQuery实例
         // 创建缩略图
         // 如果为非图片文件，可以不用调用此方法。
@@ -78,17 +77,17 @@ function upload_photo() {
                 $img.replaceWith('<span>不能预览</span>');
                 return;
             }
-            $img = `<div class="img_container">
+            $img = `<div class="img_container" id="photo_`+file.id+`">
                         <img  src="`+src+`" class="photo" >
-                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource()" >
+                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('photo_`+file.id+`')" >
+                        <input type="hidden" name="photos[]" value="">
                     </div>`;
             $("#photo_container").append($img)
         }, 75, 75);
     });
     photo_upload.on( 'uploadSuccess', function( file,data ) {
         loading2('',0);
-        $html = `<input type="hidden" name="photos[]" value="`+data.path+`">`;
-        $("#photo_container").append($html);
+        $("#photo_"+file.id).children("input").val(data.path)
 
     });
 
@@ -138,18 +137,19 @@ function upload_voice() {
 
     // 当有文件添加进来的时候
     voice_upload.on('fileQueued', function (file) {
-        $img = `<div class="img_container" >
+
+        $img = `<div class="img_container" id="voice_`+file.id+`">
                         <img  src="/image/admin/voice.png" class="voice" >
-                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource()" >
+                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('voice_`+file.id+`')" >
+                        <input type="hidden" name="voices[]" value="">
                     </div>`;
         $("#photo_container").append($img);
 
     });
 
-    voice_upload.on( 'uploadSuccess', function( file,data ) {
+    voice_upload.on( 'uploadSuccess', function( file,data) {
         loading2('',0);
-        $html = `<input type="hidden" name="voices[]" value="`+data.path+`">`;
-        $("#photo_container").append($html);
+        $("#voice_"+file.id).children("input").val(data.path);
 
     });
 
@@ -170,8 +170,11 @@ function upload_voice() {
         $error.text('上传失败');
     });
 
-}function delete_resource(){
+}
 
+//删除上传图片/语音
+function delete_resource(id) {
+    $('#'+id).remove();
 }
 
 
