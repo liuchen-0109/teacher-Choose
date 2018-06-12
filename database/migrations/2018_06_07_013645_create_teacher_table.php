@@ -22,7 +22,7 @@ class CreateTeacherTable extends Migration
             $table->integer('compus')->unsigned()->default(0)->comment('校区ID');
             $table->string('headimg_url',150)->default('')->comment('头像地址');
             $table->text('photos')->nullable()->comment('生活照片');
-            $table->text('voice_url')->nullable()->comment('语音介绍地址');
+            $table->text('voices')->nullable()->comment('语音介绍地址');
             $table->string('email',50)->default('')->comment('邮箱');
             $table->enum('work_status',['全职','兼职','特聘','专职'])->comment('岗位性质');
             $table->enum('level',['A','B','C','D'])->comment('级别');

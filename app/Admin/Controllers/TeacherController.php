@@ -44,6 +44,7 @@ class TeacherController extends Controller
         $this->checkData($request->all());
 
         $param = $request->all();
+
         if (!$request->id) {
             unset($request->id);
             $res = Teacher::create($param);
@@ -99,6 +100,7 @@ class TeacherController extends Controller
      */
     public function checkData($request)
     {
+        if (!$request['headimg_url']) json('头像不能为空');
         if (!$request['name']) json('姓名不能为空');
         if (!$request['job_number']) json('工号不能为空');
         if (!$request['subject']) json('科目不能为空');

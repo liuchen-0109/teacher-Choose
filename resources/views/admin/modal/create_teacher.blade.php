@@ -12,12 +12,30 @@
                     <div>
                         <p><h4>基本信息</h4></p>
                         <div class="row row_container">
-                            <div class="col-md-4">
-                                <label>头像</label>
-                                <div id="fileList" class="uploader-list"></div>
-                                <div id="filePicker">选择图片</div>
+                            <div class="col-md-12" style="display:flex">
+                                <div id="uploader-demo">
+                                    <!--用来存放item-->
+                                    <div id="headimg_container" style="margin-right:15px">
+                                        <img src="/image/admin/admin.png" class="headimg_picture"
+                                             style="width: 75px;height:75px">
+                                        <input name="headimg_url" type="hidden" value="">
+                                    </div>
+                                </div>
+                                {{--更改头像按钮--}}
+                                <div class="filePicker_container pull-right">
+                                    <div id="headimg_upload" class="filePicker" style="margin-right:5px">更改头像</div>
+                                </div>
+                                <div id="photo_container">
+                                </div>
+                                {{--添加生活照按钮--}}
+                                <div class="filePicker_container pull-right">
+                                    <div id="photo_upload" class="filePicker" style="margin:0 5px">添加生活照</div>
+                                </div>
+                                {{--添加语音按钮--}}
+                                <div class="filePicker_container pull-right" style="text-align: right;">
+                                    <div id="voice_upload" class="filePicker">添加语音</div>
+                                </div>
                             </div>
-
                         </div>
                         <div class="row row_container">
                             <div class="col-md-4">
@@ -329,8 +347,16 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+<script src="/js/adminUploader/uploader.js" type="text/javascript"></script>
 <script>
+    $(function () {
+        upload_headimg();
+        upload_photo();
+        upload_voice();
+    })
+
     $("#create_btn").bind('click', function () {
+
         $("#create_modal").modal('show');
     })
 
@@ -340,9 +366,9 @@
             url: '/admin/teacher/create',
             data: $('#teacher_form').serialize(),
             success: function (data) {
-                if(data.ret > 0 ){
+                if (data.ret > 0) {
                     location.href = '/admin/teacher/index';
-                }else{
+                } else {
                     alert(data.msg);
                 }
             },
@@ -356,18 +382,22 @@
     // 清除数据
     $('body').on('hidden.bs.modal', '.modal', function () {
         document.getElementById("teacher_form").reset();
+        $(".headimg_picture").attr('src', '/image/admin/admin.png');
+        $("input[name='headimg_url']").val('');
+        $("#photo_container").children('div').remove();
+        $("#photo_container").find('input').remove();
     });
 
-    function deleteTeacher(id){
+    function deleteTeacher(id) {
         $r = confirm('确认删除教师数据？');
-        if(!$r) return;
+        if (!$r) return;
         $.ajax({
             type: 'get',
-            url: '/admin/teacher/delete/'+id,
+            url: '/admin/teacher/delete/' + id,
             success: function (data) {
-                if(data.ret > 0 ){
+                if (data.ret > 0) {
                     location.href = '/admin/teacher/index';
-                }else{
+                } else {
                     alert('操作失败');
                 }
             },
@@ -379,12 +409,40 @@
     }
 
     //修改教师数据
-    function edit(id){
+    function edit(id) {
         $.ajax({
-            url:'/admin/teacher/teacherInfo/'+id,
-            type:'get',
-            dataType:'json',
-            success:function(data){
+            url: '/admin/teacher/teacherInfo/' + id,
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if (data.headimg_url) {
+                    $(".headimg_picture").attr('src', data.headimg_url);
+                    $('input[name="headimg_url"]').val(data.headimg_url);
+                }
+                if (data.photos) {
+                    $.each(data.photos, function (index, element) {
+                        if (element) {
+                            $photo = `<div class="img_container" >
+                                        <img  src="` + element + `" class="photo"  style="width:75px;height:75px">
+                                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource()" >
+                                        <input type='hidden' value="`+element+`" name="photos[]">
+                                      </div>`;
+                            $("#photo_container").append($photo);
+                        }
+                    })
+                }
+                if (data.voices) {
+                    $.each(data.voices, function (index, element) {
+                        if (element) {
+                            $voice = `<div class="img_container" >
+                                        <img  src="/image/admin/voice.png" class="voice" >
+                                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource()" >
+                                        <input type='hidden' value="`+element+`" name="voices[]">
+                                      </div>`;
+                            $("#photo_container").append($voice);
+                        }
+                    })
+                }
                 $("input[name='id']").val(id);
                 $("input[name='name']").val(data.name);
                 $("input[name='mobile']").val(data.mobile);
@@ -424,8 +482,10 @@
                 $("textarea[name='particular']").val(data.particular);
                 $("textarea[name='achievement']").val(data.achievement);
                 $("#create_modal").modal('show');
+
             },
-            error:function(data){
+
+            error: function (data) {
                 alert('请求失败');
             }
         })

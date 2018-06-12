@@ -32,7 +32,11 @@
     <!--引入CSS-->
     <link rel="stylesheet" type="text/css" href="/WebUploader/webuploader.css">
 
+    <link rel="stylesheet" type="text/css" href="/WebUploader/webuploader.css">
 
+    <!--引入JS-->
+    <script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"type="text/javascript"></script>
+    <script type="text/javascript" src="/WebUploader/webuploader.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -83,6 +87,7 @@
 <script src="/adminlte/dist/js/demo.js"></script>
 <!--引入JS-->
 <script type="text/javascript" src="/WebUploader/webuploader.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
 <div class="wrapper">
 
 @include("admin.layout.header")
@@ -100,5 +105,6 @@
 
 
 </div>
+<div id="mask"><div class='loading'></div></div>
 </body>
 </html>
