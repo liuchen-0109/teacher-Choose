@@ -8,7 +8,7 @@ class CampusCategory extends Model
 
     //包含多个子分类
     public function childCategory(){
-        return $this->hasMany('App\CampusCategory','pid','id');
+        return $this->hasMany('App\CampusCategory','pid','id')->orderBy('created_at', 'asc');
     }
 
     //无限分类

@@ -73,7 +73,6 @@
                             {{--<i class="fa  fa-chevron-down pull-right"></i>--}}
                         </span>
                     </a>
-
                         <ul class="treeview-menu" style="display:none;">
                             @foreach($cates->allChildrenCategory as $cate)
                         <li class="treeview">
@@ -91,11 +90,9 @@
                                 </li>
                                 @endforeach
                             </ul>
-
                         </li>
                             @endforeach
                     </ul>
-
                 </li>
             </ul>
         </div>

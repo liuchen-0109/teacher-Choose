@@ -78,6 +78,9 @@ function edit(id) {
         url: '/admin/teacher/teacherInfo/' + id,
         type: 'get',
         dataType: 'json',
+        error:function(){
+            alert('服务器链接失败');
+        },
         success: function (data) {
             if (data.headimg_url) {
                 $(".headimg_picture").attr('src', data.headimg_url);
