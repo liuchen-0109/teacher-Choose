@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/upload_img','\App\Admin\Controllers\UploadController@upload_img');
+Route::post('/upload/delete','\App\Admin\Controllers\UploadController@delete');
+Route::post('/upload_excel','\App\Admin\Controllers\UploadController@upload_excel');

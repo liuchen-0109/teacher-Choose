@@ -76,7 +76,7 @@ function deleteTeacher(id) {
 function edit(id) {
     $.ajax({
         url: '/admin/teacher/teacherInfo/' + id,
-        type: 'get',
+        type: 'post',
         dataType: 'json',
         error:function(){
             alert('服务器链接失败');
@@ -92,7 +92,7 @@ function edit(id) {
                         var id = `photo_` + index + ``;
                         $photo = `<div class="img_container" id="` + id + `">
                                         <img  src="` + element + `" class="photo"  style="width:75px;height:75px">
-                                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('` + id + `')" >
+                                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('` + id + `','photo')" >
                                         <input type='hidden' value="` + element + `" name="photos[]">
                                       </div>`;
                         $("#photo_container").append($photo);
@@ -105,13 +105,14 @@ function edit(id) {
                         var id = `voice_` + index + ``;
                         $voice = `<div class="img_container" id="` + id + `">
                                         <img  src="/image/admin/voice.png" class="voice" >
-                                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('` + id + `')" >
+                                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('` + id + `','voice')" >
                                         <input type='hidden' value="` + element + `" name="voices[]">
                                       </div>`;
                         $("#photo_container").append($voice);
                     }
                 })
             }
+
             $("input[name='id']").val(id);
             $("input[name='name']").val(data.name);
             $("input[name='mobile']").val(data.mobile);
@@ -150,6 +151,15 @@ function edit(id) {
             $("textarea[name='describe']").val(data.describe);
             $("textarea[name='particular']").val(data.particular);
             $("textarea[name='achievement']").val(data.achievement);
+
+            var radio = $('input[type="checkbox"]');
+            $.each(data.subject,function(index,element){
+                $.each(radio,function(i,e){
+                    if(e.value == element.subject){
+                        e.checked =true;
+                    }
+                })
+            })
             $("#create_modal").modal('show');
         },
         error: function (data) {

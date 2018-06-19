@@ -70,7 +70,7 @@
                                         <td>{{$teacher->name}}</td>
                                         <td>{{$teacher->job_number}}</td>
                                         <td>@foreach($teacher->getSubject as $item)
-                                            {{$item->subject}}
+                                                {{$item->subject}}
                                             @endforeach</td>
                                         <td>{{$teacher->mobile}}</td>
                                         <td>{{$teacher->getCampus->name}}</td>

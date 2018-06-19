@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>平行线VIP后台管理</title>
+    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -30,7 +30,6 @@
     <!--引入CSS-->
     <link rel="stylesheet" type="text/css" href="/WebUploader/webuploader.css">
 
-    <link rel="stylesheet" type="text/css" href="/WebUploader/webuploader.css">
 
     <!--引入JS-->
     <script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"type="text/javascript"></script>
@@ -99,4 +98,19 @@
 </div>
 <div id="mask"><div class='loading'></div></div>
 </body>
+<script>
+    var pathname = window.location.pathname;
+    $("li a").each(function() {
+        var href = $(this).attr("href");
+        if(pathname == href){
+            $(this).parents("ul").parent("li").addClass("active");
+            $(this).parent("li").addClass("active");
+        }
+    });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 </html>

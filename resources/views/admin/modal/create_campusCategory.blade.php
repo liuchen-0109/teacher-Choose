@@ -26,7 +26,7 @@
                             <input name="name" value="" class="form-control">
                         </div>
                     </div>
-                    <input type="hidden" name="id" valus="">
+                    <input type="hidden" name="id" value="">
                     {{csrf_field()}}
                 </form>
             </div>

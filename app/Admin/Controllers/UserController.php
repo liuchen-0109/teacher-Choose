@@ -11,7 +11,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = \App\AdminUser::paginate(10);
+        $users = \App\Schedule::where('name','!=','admin')->paginate(10);
         return view('/admin/user/index', compact('users'));
     }
 

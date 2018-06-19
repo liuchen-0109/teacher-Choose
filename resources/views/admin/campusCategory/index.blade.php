@@ -3,7 +3,7 @@
     <div class="box box-default">
         <!-- /.box-header -->
         <div class="box-header">
-            <button class="btn btn-default btn-lg pull-right" id="create_btn" type="button">新增区域</button>
+            <button class="btn btn-default btn-lg " style="margin-left:75%" id="create_btn" type="button">新增区域</button>
         </div>
         <div class="box-body">
             <div class="row">

@@ -1,4 +1,4 @@
-//新增教师时开启模态框
+//新增校区时开启模态框
 $("#create_btn").bind('click', function () {
     $("#create_modal").modal('show');
 })
@@ -36,7 +36,7 @@ $("#stroe_btn").bind('click', function () {
 function edit(id) {
     $.ajax({
         url: '/admin/campusCategory/info/' + id,
-        type: 'get',
+        type: 'post',
         dataType: 'json',
         success: function (data) {
             if (data.name) $('input[name="name"]').val(data.name);
@@ -44,8 +44,6 @@ function edit(id) {
             if (data.pid) $('select[name="pid"]').val(data.pid);
             if(data.pid == 1){
                 $('select[name="pid"]').attr('disabled','disabled');
-            }else{
-                $('select[name="pid"]').removeAttr('disabled');
             }
             $("#create_modal").modal('show');
         },
@@ -79,8 +77,10 @@ function deleteCategory(id) {
         }
     })
 }
-// 清除数据
 
+// 清除数据
 $('body').on('hidden.bs.modal', '.modal', function () {
     document.getElementById("campusCategory_form").reset();
+    $("input[name='id']").val();
+    $('select[name="pid"]').removeAttr('disabled');
 });

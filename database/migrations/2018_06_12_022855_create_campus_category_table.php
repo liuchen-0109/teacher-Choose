@@ -16,7 +16,7 @@ class CreatecampusCategoryTable extends Migration
         Schema::create('campus_category', function (Blueprint $table) {
             $table->increments('id')->comment('自增ID');
             $table->string('name','150')->default('')->comment('名称');
-            $table->integer('pid')->default(0)->comment('上级ID');
+            $table->integer('pid')->unsigned()->default(0)->comment('上级ID');
             $table->enum('type',['总部','大区','城市']);
             $table->timestamps();
         });

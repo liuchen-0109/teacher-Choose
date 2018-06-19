@@ -4,7 +4,13 @@ namespace App\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use App\Teacher;
-
+use App\Campus;
+use App\SubjectRelation;
+/**
+ * 教师控制器
+ * Class TeacherController
+ * @package App\Admin\Controllers
+ */
 class TeacherController extends Controller
 {
     /**
@@ -13,7 +19,7 @@ class TeacherController extends Controller
      */
     public function index(Request $request)
     {
-        $collection = Teacher::where('status', '>=', 0)->orderBy(
+        $collection = Teacher::where('status', '>=', 0)->with('getCampus')->with('getSubject')->orderBy(
             'created_at', 'desc');
 
         //是否进行筛选
@@ -29,14 +35,17 @@ class TeacherController extends Controller
         }
         if ($campus) $collection->where('campus', '=', $campus);
         if ($subject) $collection->where('subject', '=', $subject);
+
         $teachers = $collection->paginate(10);
-        return view('/admin/teacher/index', compact('teachers', 'word', 'campus', 'subject'));
+        //校区数据
+        $campusData = Campus::all();
+        return view('/admin/teacher/index', compact('teachers', 'word', 'campus', 'subject','campusData'));
     }
 
     /**
      * 创建用户
      * @param Request $request
-     * @return string
+     * @throws \Exception
      */
     public function create(Request $request)
     {
@@ -44,13 +53,31 @@ class TeacherController extends Controller
         $this->checkData($request->all());
 
         $param = $request->all();
-
+        $subject = $request['subject'];
+        unset($param['subject']);
         if (!$request->id) {
             unset($request->id);
             $res = Teacher::create($param);
+            if($res) {
+                foreach($subject as $item){
+                    SubjectRelation::create([
+                        'teacher_id' =>  $request->id,
+                        'subject' =>  $item,
+                    ]);
+                }
+            }
         } else {
             $teacher = Teacher::find($request->id);
+            if(SubjectRelation::where('teacher_id','=',$request->id)->first()){
+                SubjectRelation::where('teacher_id','=',$request->id)->delete();
+            }
             $res = $teacher->update($param);
+            foreach($subject as $item){
+                SubjectRelation::create([
+                   'teacher_id' =>  $request->id,
+                   'subject' =>  $item,
+                ]);
+            }
         }
 
 
@@ -62,7 +89,6 @@ class TeacherController extends Controller
     /**
      * 删除教师
      * @param Teacher $teacher
-     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
     public function delete(Teacher $teacher)
@@ -89,9 +115,17 @@ class TeacherController extends Controller
         return redirect()->back();
     }
 
+    /**教师信息获取
+     * @param Teacher $teacher
+     * @return string
+     */
     public function teacherInfo(Teacher $teacher)
     {
-        return $data = $teacher->toJson();
+        $info = $teacher->toArray();
+        $subject = $teacher->getSubject->toArray();
+        $info['subject'] = $subject;
+//       dd($info);
+        return json($info,1);
     }
 
     /**

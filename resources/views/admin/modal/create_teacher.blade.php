@@ -82,7 +82,7 @@
                                 <label>拓展</label>
                                 <div class="input-group">
                                     <input type="number" name="extend" value="0" class="form-control"
-                                           min="0" max="10" >
+                                           min="0" max="10">
                                 </div>
                             </div>
                             <div class="col-md-2 sign_input_container">
@@ -155,12 +155,16 @@
                         <div class="row row_container">
                             <div class="col-md-4">
                                 <label>授课科目</label>
-                                <select name="subject" class="form-control">
-                                    <option value="数学">数学</option>
-                                    <option value="化学">化学</option>
-                                    <option value="物理">物理</option>
-                                </select>
+                                <div>
+                                    <input type="checkbox" name="subject[]" value="数学"> 数学&nbsp;&nbsp;
+                                    <input type="checkbox" name="subject[]" value="英语">英语&nbsp;&nbsp;
+                                    <input type="checkbox" name="subject[]" value="语文"> 语文&nbsp;&nbsp;
+                                    <input type="checkbox" name="subject[]" value="物理"> 物理&nbsp;&nbsp;
+                                    <input type="checkbox" name="subject[]" value="化学"> 化学&nbsp;&nbsp;
+                                </div>
                             </div>
+                        </div>
+                        <div class="row row_container">
                             <div class="col-md-4">
                                 <label>紧急联系人</label>
                                 <input name="emergency_contact" type="text" class="form-control" placeholder="请输入..."
@@ -176,9 +180,10 @@
                             <div class="col-md-12">
                                 <label>所属校区</label>
                                 <select name="campus" class="form-control">
-                                    <option>选择校区</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                    <@foreach($campusData as $item)
+                                        <option value="{{$item->id}}"
+                                                @if($campus == $item->id) selected @endif >{{$item->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -200,7 +205,8 @@
                             </div>
                             <div class="col-md-4">
                                 <label>年龄</label>
-                                <input name="age" type="number" class="form-control" placeholder="请输入..." min="0" max="100">
+                                <input name="age" type="number" class="form-control" placeholder="请输入..." min="0"
+                                       max="100">
                             </div>
                             <div class="col-md-4">
                                 <label>出生日期</label>
@@ -249,7 +255,8 @@
                         <div class="row row_container">
                             <div class="col-md-4">
                                 <label>教师年限</label>
-                                <input name="experience_age" type="number" class="form-control " placeholder="请输入..." min="0" max="100">
+                                <input name="experience_age" type="number" class="form-control " placeholder="请输入..."
+                                       min="0" max="100">
                             </div>
                             <div class="col-md-4">
                                 <label>毕业院校</label>
@@ -266,7 +273,7 @@
                             <div class="col-md-4">
                                 <label>最高学历</label>
                                 <select name="education" id="" class="form-control">
-                                    <option valur="博士后">博士后</option>
+                                    <option value="博士后">博士后</option>
                                     <option value="博士">博士</option>
                                     <option value="硕士">硕士</option>
                                     <option value="本科">本科</option>

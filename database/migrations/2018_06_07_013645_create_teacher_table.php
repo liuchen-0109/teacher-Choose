@@ -17,7 +17,6 @@ class CreateTeacherTable extends Migration
             $table->increments('id')->comment('自增id');
             $table->string('name',50)->comment('姓名');
             $table->string('job_number',32)->default(0)->comment('工号');
-            $table->string('subject',50)->default('')->comment('科目');
             $table->string('mobile',15)->default('')->comment('电话');
             $table->integer('campus')->unsigned()->default(0)->comment('校区ID');
             $table->string('headimg_url',150)->default('')->comment('头像地址');

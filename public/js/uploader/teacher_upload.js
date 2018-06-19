@@ -4,7 +4,7 @@ function upload_headimg() {
         // 选完文件后，是否自动上传。
         auto: true,
         //可重复上传
-        duplicate :true,
+        duplicate: true,
         // swf文件路径
         swf: '/WebUploader/Uploader.swf',
 
@@ -24,19 +24,19 @@ function upload_headimg() {
     });
 
 
-    headimg_upload.on( 'uploadSuccess', function( file,data ) {
-        loading2('',0);
-     if(data.ret == 1){
-         $('#headimg_container').find('img').attr('src',data.path);
-         $('input[name = "headimg_url"]').val(data.path);
-     }else{
-         alert('上传失败，请重试');
-     }
+    headimg_upload.on('uploadSuccess', function (file, data) {
+        loading2('', 0);
+        if (data.ret == 1) {
+            $('#headimg_container').find('img').attr('src', data.path);
+            $('input[name = "headimg_url"]').val(data.path);
+        } else {
+            alert('上传失败，请重试');
+        }
     });
 
 // 文件上传失败，显示上传出错。
     headimg_upload.on('uploadError', function (file) {
-       alert('上传失败，请重试');
+        alert('上传失败，请重试');
     });
 
 }
@@ -47,7 +47,7 @@ function upload_photo() {
         // 选完文件后，是否自动上传。
         auto: true,
         //可重复上传
-        duplicate :true,
+        duplicate: true,
         // swf文件路径
         swf: '/WebUploader/Uploader.swf',
 
@@ -77,22 +77,22 @@ function upload_photo() {
                 $img.replaceWith('<span>不能预览</span>');
                 return;
             }
-            $img = `<div class="img_container" id="photo_`+file.id+`">
-                        <img  src="`+src+`" class="photo" >
-                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('photo_`+file.id+`')" >
+            $img = `<div class="img_container" id="photo_` + file.id + `">
+                        <img  src="` + src + `" class="photo" >
+                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('photo_` + file.id + `','photo')" >
                         <input type="hidden" name="photos[]" value="">
                     </div>`;
             $("#photo_container").append($img)
         }, 75, 75);
     });
-    photo_upload.on( 'uploadSuccess', function( file,data ) {
-        loading2('',0);
-        $("#photo_"+file.id).children("input").val(data.path)
+    photo_upload.on('uploadSuccess', function (file, data) {
+        loading2('', 0);
+        $("#photo_" + file.id).children("input").val(data.path)
 
     });
 
 // 文件上传过程中创建进度条实时显示。
-    photo_upload.on( 'uploadProgress', function( file, percentage ) {
+    photo_upload.on('uploadProgress', function (file, percentage) {
         loading2('上传中');
     });
 
@@ -116,7 +116,7 @@ function upload_voice() {
         // 选完文件后，是否自动上传。
         auto: true,
         //可重复上传
-        duplicate :true,
+        duplicate: true,
         // swf文件路径
         swf: '/WebUploader/Uploader.swf',
 
@@ -138,23 +138,23 @@ function upload_voice() {
     // 当有文件添加进来的时候
     voice_upload.on('fileQueued', function (file) {
 
-        $img = `<div class="img_container" id="voice_`+file.id+`">
+        $img = `<div class="img_container" id="voice_` + file.id + `">
                         <img  src="/image/admin/voice.png" class="voice" >
-                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('voice_`+file.id+`')" >
+                        <img  src="/image/admin/delete.png" class="delete" onclick="delete_resource('voice_` + file.id + `','voice')" >
                         <input type="hidden" name="voices[]" value="">
                     </div>`;
         $("#photo_container").append($img);
 
     });
 
-    voice_upload.on( 'uploadSuccess', function( file,data) {
-        loading2('',0);
-        $("#voice_"+file.id).children("input").val(data.path);
+    voice_upload.on('uploadSuccess', function (file, data) {
+        loading2('', 0);
+        $("#voice_" + file.id).children("input").val(data.path);
 
     });
 
 // 文件上传过程中创建进度条实时显示。
-    voice_upload.on( 'uploadProgress', function( file, percentage ) {
+    voice_upload.on('uploadProgress', function (file, percentage) {
         loading2('上传中');
     });
 
@@ -173,7 +173,21 @@ function upload_voice() {
 }
 
 //删除上传图片/语音
-function delete_resource(id) {
+function delete_resource(id, type) {
+    var r =confirm('删除后数据不可恢复，请确认操作');
+    if(!r) return
+    loading2('处理中...')
+     var url = $("#" + id).children("input").val();
+    $.ajax({
+        url: '/api/upload/delete',
+        data: {'id': id,'url':url},
+        type: 'post',
+        success: function () {
+        },
+        error: function () {
+        }
+    })
+    loading2('',0)
     $('#'+id).remove();
 }
 
