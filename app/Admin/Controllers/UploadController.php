@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Excel;
+use App\Schedule;
 class UploadController extends Controller
 {
     /**
@@ -27,7 +28,6 @@ class UploadController extends Controller
      * @param Request $request
      */
     public function delete(Request $request){
-        dd(public_path().$request['url']);
         @unlink(public_path().$request['url']);
     }
 
@@ -45,14 +45,8 @@ class UploadController extends Controller
         // 新文件名
         $path = $file->storeAs(date('Ymd'),$file_name);
         if(!$path) json('上传失败');
-        Excel::load($file, function($reader) {
-            $data = $reader->all();
-            foreach($data as $items){
-                foreach($items as $item ){
-                    dd($item);
-                }
-            };
-        });
+//        $this->save_data($file);
         json(['path'=>'/uploads/'.date('Ymd').'/'.$file_name],1);
     }
+
 }

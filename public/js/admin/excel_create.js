@@ -87,7 +87,7 @@ function upload_excel() {
             alert(data.msg);
         }else{
             $("#info_container").children("span").html(file.name);
-            $("#info_container").children("input").val(file.name);
+            $("#info_container").children("input").val(data.path);
         }
 
 
