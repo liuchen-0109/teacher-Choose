@@ -4,6 +4,6 @@ namespace App;
 
 class Excel extends Model
 {
-    protected $table = 'Excel';
+    protected $table = 'excel';
 
 }
