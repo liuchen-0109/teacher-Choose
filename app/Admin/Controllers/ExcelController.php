@@ -14,17 +14,17 @@ class ExcelController extends Controller
      */
     public function index(Request $request)
     {
-        $collection = new Excel();
-        //是否进行筛选
-        $year = $request->year ? $request->year : "";
-        $season = $request->season ? $request->season : "";
-        $type = $request->type ? $request->type : "";
-        if ($year) $collection = $collection->where('year', '=', $year);
-        if ($season) $collection = $collection->where('season', '=', $season);
-        if ($type) $collection = $collection->where('type', '=', $type);
-        $excels = $collection->orderBy('year', 'asc')->orderBy('season', 'asc')->paginate(10);
-        $d = intval(date('Y', time()));
-        $years = [$d, $d + 1, $d + 2];
+//        $collection = new Excel();
+//        //是否进行筛选
+//        $year = $request->year ? $request->year : "";
+//        $season = $request->season ? $request->season : "";
+//        $type = $request->type ? $request->type : "";
+//        if ($year) $collection = $collection->where('year', '=', $year);
+//        if ($season) $collection = $collection->where('season', '=', $season);
+//        if ($type) $collection = $collection->where('type', '=', $type);
+//        $excels = $collection->orderBy('year', 'asc')->orderBy('season', 'asc')->paginate(10);
+//        $d = intval(date('Y', time()));
+//        $years = [$d, $d + 1, $d + 2];
         return view('/admin/excel/index', compact('excels', 'year', 'season', 'type', 'years'));
     }
 
