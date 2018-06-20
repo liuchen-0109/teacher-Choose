@@ -4,7 +4,7 @@ namespace App\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use App\Excel;
-use Excel as LaravelExcel;
+use LaravelExcel;
 use App\Schedule;
 class ExcelController extends Controller
 {
