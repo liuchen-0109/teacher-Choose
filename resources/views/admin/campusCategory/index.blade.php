@@ -18,32 +18,34 @@
                                     <th>区域类型</th>
                                     <th>操作</th>
                                 </tr>
-                                @foreach($cates->allChildrenCategory as  $cate)
-                                    <tr>
-                                        <td></td>
-                                        <td>{{$cate->name}}</td>
-                                        <td>{{$cate->type}}</td>
-                                        <td>
-                                            <a class="text-info" id="edit_btn"
-                                               href="javascript:edit({{$cate->id}})">编辑</a>
-                                            <a class="text-danger"
-                                               href="javascript:deleteCategory({{$cate->id}})">删除</a>
-                                        </td>
-                                    </tr>
-                                    @foreach($cate->allChildrenCategory as  $item)
+                                @if($cates)
+                                    @foreach($cates->allChildrenCategory as  $cate)
                                         <tr>
                                             <td></td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;┠{{$item->name}}</td>
-                                            <td>{{$item->type}}</td>
+                                            <td>{{$cate->name}}</td>
+                                            <td>{{$cate->type}}</td>
                                             <td>
                                                 <a class="text-info" id="edit_btn"
-                                                   href="javascript:edit({{$item->id}})">编辑</a>
+                                                   href="javascript:edit({{$cate->id}})">编辑</a>
                                                 <a class="text-danger"
-                                                   href="javascript:deleteCategory({{$item->id}})">删除</a>
+                                                   href="javascript:deleteCategory({{$cate->id}})">删除</a>
                                             </td>
                                         </tr>
+                                        @foreach($cate->allChildrenCategory as  $item)
+                                            <tr>
+                                                <td></td>
+                                                <td>&nbsp;&nbsp;&nbsp;&nbsp;┠{{$item->name}}</td>
+                                                <td>{{$item->type}}</td>
+                                                <td>
+                                                    <a class="text-info" id="edit_btn"
+                                                       href="javascript:edit({{$item->id}})">编辑</a>
+                                                    <a class="text-danger"
+                                                       href="javascript:deleteCategory({{$item->id}})">删除</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
-                                @endforeach
+                                @endif
                             </table>
                         </div>
                         <!-- /.box-body -->

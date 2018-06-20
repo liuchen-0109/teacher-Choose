@@ -73,7 +73,10 @@
                                             {{$item->subject}}
                                             @endforeach</td>
                                         <td>{{$teacher->mobile}}</td>
-                                        <td>{{$teacher->getCampus->name}}</td>
+                                        <td>@if($teacher->getCampus)
+                                                {{$teacher->getCampus->name}}
+                                                @endif
+                                        </td>
                                         <td>
                                             @if($teacher->status == 1)
                                                 启用

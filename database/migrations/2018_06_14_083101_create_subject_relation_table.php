@@ -16,7 +16,7 @@ class CreateSubjectRelationTable extends Migration
         Schema::create('subject_relation', function (Blueprint $table) {
             $table->increments('id')->comment('自增ID');
             $table->integer('teacher_id' )->unsigned()->default(0)->comment('教师ID');
-            $table->enum('subject',['数学','语文','英语','物理','化学'] )->default(0)->comment('学科ID');
+            $table->enum('subject',['数学','语文','英语','物理','化学'] )->default('数学')->comment('学科ID');
             $table->timestamps();
         });
     }

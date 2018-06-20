@@ -14,9 +14,11 @@
                             <label>上级分类</label>
                             <select name="pid" class="form-control">
                                 <option value='1'>总部</option>
+                                @if($cates)
                                 @foreach($cates->allChildrenCategory as $cate)
                                     <option value="{{$cate->id}}">{{$cate->name}}</option>
                                 @endforeach()
+                                    @endif
                             </select>
                         </div>
                     </div>

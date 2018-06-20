@@ -1,4 +1,3 @@
-
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="create_modal">
     <div class="modal-dialog  " role="document">
         <div class="modal-content">
@@ -14,13 +13,16 @@
                         <div class="row row_container">
                             <div class="col-md-12">
                                 <label>组织架构</label>
-                                <select class="form-control" name="pid"  data-placeholder="选择市区">
-                                    @foreach($cates->allChildrenCategory as $cate)
-                                        @foreach($cate->allChildrenCategory as $item)
-                                            <option value="{{$item->id}}">总部 -{{$cate->name}}- {{$item->name}}</option>
+                                <select class="form-control" name="pid" data-placeholder="选择市区">
+                                    @if($cates)
+                                        @foreach($cates->allChildrenCategory as $cate)
+                                            @foreach($cate->allChildrenCategory as $item)
+                                                <option value="{{$item->id}}">总部 -{{$cate->name}}
+                                                    - {{$item->name}}</option>
 
+                                            @endforeach
                                         @endforeach
-                                    @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -35,15 +37,15 @@
                         <div class="row row_container">
 
                             <div class="col-md-4">
-                                <select name="province"  class="form-control" onchange="GetArea('province','city');">
+                                <select name="province" class="form-control" onchange="GetArea('province','city');">
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select name="city"  class="form-control" onchange="GetArea('city','district');">
+                                <select name="city" class="form-control" onchange="GetArea('city','district');">
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select name="district"  class="form-control">
+                                <select name="district" class="form-control">
                                 </select>
                             </div>
                         </div>

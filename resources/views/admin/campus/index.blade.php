@@ -10,12 +10,14 @@
                             <select name="pid" class="form-control select2 select2-hidden-accessible search_size"
                                     tabindex="-1" aria-hidden="true">
                                 <option value="">全部区域</option>
+                                @if($cates)
                                 @foreach($cates->allChildrenCategory as $cate)
                                     <option value="{{$cate->id}}"  disabled><b>{{$cate->name}}</b></option>
                                     @foreach($cate->allChildrenCategory as $item)
                                         <option value="{{$item->id}}" @if($pid == $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach
                                 @endforeach
+                                    @endif
                             </select>
                             <!-- /.form-group -->
                         </div>
