@@ -87,9 +87,12 @@
 <!-- Left side column. contains the logo and sidebar -->
 @include("admin.layout.sidebar")
 
+
+
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @yield('content')
+        @include("admin.modal.password")
     </div>
 
 <!-- ./wrapper -->
@@ -112,5 +115,53 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function changePassword(){
+        $('#password_modal').modal('show');
+    }
+    // 清除数据
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        document.getElementById("password_form").reset();
+    });
+
+    function storePassword(id){
+
+        var newpassword = $('input[name="newpassword"]').val();
+        var repassword = $('input[name="repassword"]').val();
+        var password = $('input[name="password"]').val();
+        if(!password || !repassword || !password){
+            alert('密码不能为空!')
+            return;
+        }
+            var reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
+            if (!reg.test(newpassword)) {
+                alert('密码必须包含字母和数子的组合！');
+                return ;
+            }
+            if(newpassword != repassword){
+                alert('两次密码输入不一致！');
+                return;
+            }
+        loading2('处理中...');
+        $.ajax({
+            url:'/admin/user/changePassword/'+id,
+            type:'post',
+            data:$('#password_form').serialize(),
+            dataType:'json',
+            success:function(data){
+                if(data.ret == 1){
+                    alert('操作成功');
+                    location.reload();
+                }else{
+                    loading2('',0);
+                    alert(data.msg);
+                }
+            },
+            error:function(){
+                loading2('',0);
+                alert('服务器连接失败');
+            }
+        })
+    }
 </script>
 </html>

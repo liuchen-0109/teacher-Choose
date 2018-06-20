@@ -26,7 +26,7 @@
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <select name="season" class="form-control">
+                            <select name="season" id="season" class="form-control">
                                 <option value="春季">春季</option>
                                 <option value="暑期">暑期</option>
                                 <option value="秋季">秋季</option>

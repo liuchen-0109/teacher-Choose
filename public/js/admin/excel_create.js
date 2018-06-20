@@ -1,11 +1,11 @@
-$(function(){
+$(function () {
     upload_excel();
-    $('#create_btn').bind('click',function(){
+    $('#create_btn').bind('click', function () {
         $("#create_modal").modal('show');
     });
-    $('#store_btn').bind('click',function(){
+    $('#store_btn').bind('click', function () {
         $name = $("#info_container").children("input").val();
-        if(!$name){
+        if (!$name) {
             alert('请上传课表');
             return;
         }
@@ -17,13 +17,13 @@ $(function(){
                 if (data.ret > 0) {
                     create()
                 } else {
-                   var r =  confirm('课表已存在，确定重新上传并覆盖原有课表？');
-                   if(!r) return;
+                    var r = confirm('课表已存在，确定重新上传并覆盖原有课表？');
+                    if (!r) return;
                     create();
                 }
             },
             error: function (data) {
-                alert('服务器连接失败，请重试');
+                alert('服务器连接失败');
             },
             dataType: 'json'
         });
@@ -42,7 +42,15 @@ $(function(){
 })
 
 
-function create(){
+function create() {
+    var $season = $("#season").val();
+    var $excel_name = $("#info_container").children("span").html();
+    var index = $excel_name.indexOf($season);
+    if (index < 0) {
+        alert('请检查表格名称是否正确');
+        return;
+    }
+    loading2('处理中...');
     $.ajax({
         type: 'POST',
         url: '/admin/excel/create',
@@ -52,14 +60,17 @@ function create(){
                 location.href = '/admin/excel/index';
             } else {
                 alert(data.msg);
+                loading2('', 0);
             }
         },
         error: function (data) {
-            alert('服务器连接失败，请重试');
+            alert('课表格式不正确，请检查格式！');
+            loading2('', 0);
         },
         dataType: 'json'
     });
 }
+
 function upload_excel() {
     excel_upload = WebUploader.create({
 
@@ -83,9 +94,9 @@ function upload_excel() {
 
     excel_upload.on('uploadSuccess', function (file, data) {
         loading2('', 0);
-        if(data.ret == 0){
+        if (data.ret == 0) {
             alert(data.msg);
-        }else{
+        } else {
             $("#info_container").children("span").html(file.name);
             $("#info_container").children("input").val(data.path);
         }
@@ -100,7 +111,7 @@ function upload_excel() {
 
 // 文件上传失败，显示上传出错。
     excel_upload.on('uploadError', function (file) {
-        loading2('',0);
+        loading2('', 0);
         alert('上传失败');
     });
 }
@@ -108,6 +119,7 @@ function upload_excel() {
 function deleteExcel(id) {
     $r = confirm('删除后数据不可恢复，确认删除数据？');
     if (!$r) return;
+    loading2('处理中...');
     $.ajax({
         type: 'get',
         url: '/admin/excel/delete/' + id,
@@ -116,10 +128,12 @@ function deleteExcel(id) {
                 location.href = '/admin/excel/index';
             } else {
                 alert('操作失败');
+                loading2('', 0);
             }
         },
         error: function (data) {
             alert('请求失败');
+            loading2('', 0);
         },
         dataType: 'json'
     });

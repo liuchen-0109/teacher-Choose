@@ -68,7 +68,7 @@
                                         <td>{{$excel->year}}</td>
                                         <td>{{$excel->season}}</td>
                                         <td>{{$excel->type}}</td>
-                                        <td>1</td>
+                                        <td>{{$excel->count}}</td>
                                         <td>
                                             @if($excel->status == 1)
                                                 启用

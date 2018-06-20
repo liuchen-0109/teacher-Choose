@@ -9,6 +9,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/logout', '\App\Admin\Controllers\LoginController@logout');
     Route::get('/test', '\App\Admin\Controllers\TestController@index');
     Route::post('/test/excel', '\App\Admin\Controllers\TestController@test');
+    Route::get('/password', '\App\Admin\Controllers\AppPasswordController@setPassword');
+    Route::get('/weather', '\App\Admin\Controllers\homeController@weather');
 
     Route::group(['middleware'=>'auth:admin'],function(){
         Route::get('/','\App\Admin\Controllers\HomeController@index');
@@ -18,6 +20,11 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::group(['prefix'=>'user'],function() {
             Route::get('/index','\App\Admin\Controllers\UserController@index');
+            Route::post('/create','\App\Admin\Controllers\UserController@create');
+            Route::get('/delete/{adminUser}','\App\Admin\Controllers\UserController@delete');
+            Route::post('/info/{adminUser}','\App\Admin\Controllers\UserController@info');
+            Route::post('/changePassword/{adminUser}','\App\Admin\Controllers\UserController@changePassword');
+
         });
 
         Route::group(['prefix'=>'excel'],function() {

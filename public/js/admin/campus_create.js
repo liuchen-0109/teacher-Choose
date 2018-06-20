@@ -71,7 +71,6 @@ $('body').on('hidden.bs.modal', '.modal', function () {
     document.getElementById("campus_form").reset();
     $('select[name="province"]').trigger('change');
     $('select[name="city"]').trigger('change');
-
 });
 
 function deleteCampus(id){

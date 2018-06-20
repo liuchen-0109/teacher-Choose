@@ -14,3 +14,22 @@ function json($data,$code = 0){
         exit(json_encode($a));
     }
 }
+
+/**直接请求输出
+ * @param $msg
+ * @param string $url
+ */
+function alert($msg,$url = ''){
+    header("Content-type: text/html; charset=utf-8");
+    if($url == ''){
+        exit("<script>alert('".$msg."');history.go(-1);</script>");
+    }else{
+        if($url == 'close'){
+            exit("<script>alert('".$msg."');window.opener=null;window.close();</script>");
+        }else if($url == 'stop'){
+            exit("<script>alert('".$msg."');</script>");
+        }else{
+            exit("<script>alert('".$msg."');location.href='".$url."';</script>");
+        }
+    }
+}

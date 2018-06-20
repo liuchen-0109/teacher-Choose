@@ -106,4 +106,5 @@
         </div>
     </div>
     @include('admin.modal.create_teacher')
+
 @endsection
