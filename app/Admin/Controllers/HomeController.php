@@ -14,12 +14,13 @@ class HomeController extends Controller
 
     public function weather()
     {
-        $r = $this->getCity();
-dd($r);
+        $city_data = $this->getCity();
+        $city = $city_data['city'];
+
         header("Content-type:text/html;charset=utf-8");
         // 百度获取天气情况
 
-        $url = "http://www.weather.com.cn/data/cityinfo/101010100.html";     //获取数据的请求地址
+        $url = "http://wthrcdn.etouch.cn/weather_mini?city=".$city;     //获取数据的请求地址
         $result = json_decode($this->getData($url), true);
 
         echo "<pre>";
