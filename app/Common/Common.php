@@ -15,6 +15,26 @@ function json($data,$code = 0){
     }
 }
 
+function success_json($data,$title,$msg = '操作成功',$code='1'){
+    $array = [
+        'code'=>$code,
+        'msg'=>$msg,
+        'title'=>$title,
+      'data'=>$data,
+    ];
+    exit(json_encode($array));
+}
+
+function error_json($title,$msg = '操作失败',$code='0'){
+    $array = [
+        'code'=>$code,
+        'msg'=>$msg,
+        'title'=>$title,
+    ];
+    exit(json_encode($array));
+
+}
+
 /**直接请求输出
  * @param $msg
  * @param string $url

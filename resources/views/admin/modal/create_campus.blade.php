@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">新增/编辑教师</h4>
+                <h4 class="modal-title">新增/编辑校区</h4>
             </div>
             <div class="modal-body">
                 <form id="campus_form">
@@ -24,6 +24,23 @@
                                         @endforeach
                                     @endif
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row row_container" >
+                                <div class="col-md-5">
+                                    <label> 校区封面 </label>
+                                    <div id="photo_upload" class="filePicker" style="top:0px">尺寸708*295 上传</div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="photo_container" style="margin-right:15px">
+                                        <input name="photo" type="hidden" value="">
+                                    </div>
+                                </div>
+
+                            <div class="col-md-5" id="info_container">
+                                <span></span>
+                                <input type="hidden" value="" name="name">
                             </div>
                         </div>
                         <div class="row row_container">
@@ -58,8 +75,15 @@
                         </div>
                         <div class="row row_container">
                             <div class="col-md-12">
-                                <label>联系电话</label>
+                                <label>联系电话1</label>
                                 <input type="tel" name="tel" class="form-control" placeholder="请输入..."
+                                       maxlength="11">
+                            </div>
+                        </div>
+                        <div class="row row_container">
+                            <div class="col-md-12">
+                                <label>联系电话2</label>
+                                <input type="tel" name="tel2" class="form-control" placeholder="请输入..."
                                        maxlength="11">
                             </div>
                         </div>

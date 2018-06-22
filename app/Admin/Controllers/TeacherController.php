@@ -24,8 +24,8 @@ class TeacherController extends Controller
 
         //是否进行筛选
         $word = $request->word ? $request->word : "";
-        $campus = $request->campus ? $request->campus : "";
-        $subject = $request->subject ? $request->subject : "";
+        $campus_search = $request->campus_search ? $request->campus_search : "";
+        $subject_search = $request->subject_search ? $request->subject_search : "";
         if ($word) {
             if (is_numeric($word)) {
                 $collection->where('mobile', '=', $word);
@@ -33,13 +33,13 @@ class TeacherController extends Controller
                 $collection->where('name', 'like', '%' . $word . "%");
             }
         }
-        if ($campus) $collection->where('campus', '=', $campus);
-        if ($subject) $collection->where('subject', '=', $subject);
+        if ($campus_search) $collection->where('campus', '=', $campus_search);
+        if ($subject_search) $collection->where('subject', '=', $subject_search);
 
         $teachers = $collection->paginate(10);
         //校区数据
         $campusData = Campus::all();
-        return view('/admin/teacher/index', compact('teachers', 'word', 'campus', 'subject','campusData'));
+        return view('/admin/teacher/index', compact('teachers', 'word', 'campus_search', 'subject_search','campusData'));
     }
 
     /**

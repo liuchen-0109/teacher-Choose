@@ -37,7 +37,13 @@ class CampusController extends Controller
         if (!$data['address']) json('详细地址不能为空');
         if (!$data['province'] || !$data['city'] || !$data['district']) json('请选择省市区');
         if (!$data['lng'] || !$data['lat']) json('请标记地图位置');
-        if (!$data['pid']) json('请输入联系电话');
+        if (!$data['tel']) json('请输入联系电话');
+        if(!is_numeric($data['tel']) || strlen($data['tel']) < 11) json('电话格式有误');
+        if($data['tel2']){
+            if(!is_numeric($data['tel2']) || strlen($data['tel2']) < 11) json('电话格式有误');
+
+        }
+        if (!$data['photo']) json('请上传校区封面');
         unset($data['_token']);
         if ($data['id']) {
             $campus = Campus::find($data['id']);

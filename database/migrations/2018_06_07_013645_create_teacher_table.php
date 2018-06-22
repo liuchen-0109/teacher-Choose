@@ -47,7 +47,7 @@ class CreateTeacherTable extends Migration
             $table->string('native_place',150)->default('')->comment('籍贯');
             $table->string('domicile',150)->default('')->comment('户籍所在地');
             $table->string('id_number',32)->default('')->comment('身份证');
-            $table->unsignedTinyInteger('experience_age')->default(0)->comment('教师年限');
+            $table->date('experience_age')->comment('教师年限');
             $table->string('college',150)->default('')->comment('毕业院校');
             $table->string('department',150)->default('')->comment('专业');
             $table->enum('education',['小学','初中','高中及中专','大专','本科','硕士','博士','博士后'])->comment('专业');

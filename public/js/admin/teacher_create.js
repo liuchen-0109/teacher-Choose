@@ -23,6 +23,7 @@ $(function () {
 
     //保存教师数据
     $("#store_btn").bind('click', function () {
+        loading2('处理中...');
         $.ajax({
             type: 'POST',
             url: '/admin/teacher/create',
@@ -32,10 +33,12 @@ $(function () {
                     location.href = '/admin/teacher/index';
                 } else {
                     alert(data.msg);
+                    loading2('',0);
                 }
             },
             error: function (data) {
                 alert('服务器连接失败，请重试');
+                loading2('',0);
             },
             dataType: 'json'
         });
@@ -55,6 +58,7 @@ $(function () {
 function deleteTeacher(id) {
     $r = confirm('确认删除教师数据？');
     if (!$r) return;
+    loading2('处理中...');
     $.ajax({
         type: 'get',
         url: '/admin/teacher/delete/' + id,
@@ -63,10 +67,12 @@ function deleteTeacher(id) {
                 location.href = '/admin/teacher/index';
             } else {
                 alert('操作失败');
+                loading2('',0);
             }
         },
         error: function (data) {
             alert('请求失败');
+            loading2('',0);
         },
         dataType: 'json'
     });
@@ -164,6 +170,7 @@ function edit(id) {
         },
         error: function (data) {
             alert('请求失败');
+
         }
     })
 }

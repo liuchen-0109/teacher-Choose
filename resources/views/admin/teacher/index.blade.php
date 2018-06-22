@@ -8,10 +8,10 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <select class="form-control select2 select2-hidden-accessible search_size"
-                                    tabindex="-1" aria-hidden="true" name="campus">
+                                    tabindex="-1" aria-hidden="true" name="campus_search">
                                 <option value="">选择学校</option>
                                 @foreach($campusData as $item)
-                                    <option value="{{$item->id}}"@if($campus == $item->id) selected @endif >{{$item->name}}</option>
+                                    <option value="{{$item->id}}"@if($campus_search == $item->id) selected @endif >{{$item->name}}</option>
                                 @endforeach
                             </select>
                             <!-- /.form-group -->
@@ -19,12 +19,12 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <select name="subject" class="form-control select2 select2-hidden-accessible search_size"
+                            <select name="subject_serach" class="form-control select2 select2-hidden-accessible search_size"
                                     tabindex="-1" aria-hidden="true">
                                 <option value="">科目不限</option>
-                                <option value="数学" @if($subject == '数学') selected @endif>数学</option>
-                                <option value="英语" @if($subject == '英语') selected @endif>英语</option>
-                                <option value="语文" @if($subject == '语文') selected @endif>语文</option>
+                                <option value="数学" @if($subject_search == '数学') selected @endif>数学</option>
+                                <option value="英语" @if($subject_search == '英语') selected @endif>英语</option>
+                                <option value="语文" @if($subject_search == '语文') selected @endif>语文</option>
                             </select>
                             <!-- /.form-group -->
                         </div>
@@ -44,7 +44,7 @@
                             <!-- /.form-group -->
                         </div>
                     </div>
-                    @if($subject || $campus || $word)
+                    @if($subject_search || $campus_search || $word)
                         <a href="/admin/teacher/index" class="text-info">重置条件</a>
                     @endif()
                     <button class="btn btn-default btn-lg" id="create_btn" type="button" style="margin-left:10px">新增教师</button>

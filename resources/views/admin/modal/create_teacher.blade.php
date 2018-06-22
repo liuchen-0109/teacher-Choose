@@ -29,7 +29,7 @@
                                 </div>
                                 {{--添加生活照按钮--}}
                                 <div class="filePicker_container pull-right">
-                                    <div id="photo_upload" class="filePicker" style="margin:0 5px">添加生活照</div>
+                                    <div id="photo_upload" class="filePicker" style="margin:0 5px">添加生活照 750*590</div>
                                 </div>
                                 {{--添加语音按钮--}}
                                 <div class="filePicker_container pull-right" style="text-align: right;">
@@ -182,7 +182,7 @@
                                 <select name="campus" class="form-control">
                                     <@foreach($campusData as $item)
                                         <option value="{{$item->id}}"
-                                                @if($campus == $item->id) selected @endif >{{$item->name}}</option>
+                                        >{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -255,7 +255,7 @@
                         <div class="row row_container">
                             <div class="col-md-4">
                                 <label>教师年限</label>
-                                <input name="experience_age" type="number" class="form-control " placeholder="请输入..."
+                                <input name="experience_age" type="date" class="form-control " placeholder="请输入..."
                                        min="0" max="100">
                             </div>
                             <div class="col-md-4">
