@@ -45,7 +45,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-
+        'campus' => [
+            'driver' => 'session',
+            'provider' => 'campusCheck',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -78,6 +81,11 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\AdminUser::class,
+        ],
+
+        'campusCheck' => [
+            'driver' => 'eloquent',
+            'model' => App\AppPassword::class,
         ],
 
         // 'users' => [

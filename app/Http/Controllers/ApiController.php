@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AppPassword;
 use Illuminate\Http\Request;
 use App\Campus;
 use App\Excel;
@@ -143,11 +144,9 @@ class ApiController extends Controller
                 if(!in_array($item,$teacher_array)) $teacher_array[] = $item;
             }
         }
-        return $teacher_array;
-        $res = Teacher::whereIn('name',$teacher_array)->get();
+        $field = ['name', 'college', 'experience_age', 'work_status', 'headimg_url', 'sex', 'id'];
+        $res = Teacher::whereIn('name',$teacher_array)->get($field);
         return  $res;
-
-
     }
 
     /**
@@ -283,5 +282,14 @@ class ApiController extends Controller
         }
 
         return round($distance, $decimal);
+    }
+
+    public function login(Request $request){
+        if(!$request['password']) error_json('登录验证','密码缺失',-1);
+        $password = AppPassword::first();
+        if(md5($request['password'])  != $password->bcrypt_password) error_json('登录验证','密码不正确',-1);
+        $token = md5('vip'. $_SERVER['REQUEST_TIME'].$request['password']);
+        session([$token => 1]);
+        success_json($token,'登录验证');
     }
 }

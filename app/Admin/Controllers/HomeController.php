@@ -9,7 +9,9 @@ class HomeController extends Controller
     public function index()
     {
         $password = AppPassword::first();
-        return view('/admin/home/index',compact('password'));
+        $weather = $this->weather();
+        $weather = $weather['HeWeather6'][0];
+        return view('/admin/home/index',compact('password','weather'));
     }
 
     public function weather()
@@ -19,15 +21,11 @@ class HomeController extends Controller
 
         header("Content-type:text/html;charset=utf-8");
         // 百度获取天气情况
+        $key = 'ceeeea8cb2fe4445ab759f8c6fa63f24';
+        $city = '郑州';
+        $url = 'https://free-api.heweather.com/s6/weather/forecast?location='.$city.'&key='.$key;     //获取数据的请求地址
+        return $result = json_decode($this->getData($url), true);
 
-        $url = "https://www.sojson.com/open/api/weather/json.shtml?city=郑州";     //获取数据的请求地址
-        $result = json_decode($this->getData($url), true);
-
-        echo "<pre>";
-        echo "天气预报信息<br/>";
-        print_r($result);
-        echo "<br/>天气预报信息";
-        exit();
 
     }
 
@@ -45,8 +43,6 @@ class HomeController extends Controller
         curl_close($ch);
         return $result;
     }
-
-
 
     function getClientIP()
     {

@@ -10,7 +10,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/test', '\App\Admin\Controllers\TestController@index');
     Route::post('/test/excel', '\App\Admin\Controllers\TestController@test');
     Route::get('/password', '\App\Admin\Controllers\AppPasswordController@setPassword');
-    Route::get('/weather', '\App\Admin\Controllers\HomeController@weather');
 
     Route::group(['middleware'=>'auth:admin'],function(){
         Route::get('/','\App\Admin\Controllers\HomeController@index');

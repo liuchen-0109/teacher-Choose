@@ -12,7 +12,7 @@ class AppPasswordController extends Controller
         Password::truncate();
         $password = rand(1111, 9999);
         $data['password'] = $password;
-        $data['bcrypt_password'] = bcrypt($password);
+        $data['bcrypt_password'] = md5($password);
         $r = Password::create($data);
         if (!$r) alert("更新失败", '/admin/home');
         alert("更新成功", '/admin/home');
