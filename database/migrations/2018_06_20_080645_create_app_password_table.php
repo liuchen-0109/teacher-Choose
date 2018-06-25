@@ -16,7 +16,7 @@ class CreateAppPasswordTable extends Migration
         Schema::create('app_password', function (Blueprint $table) {
             $table->increments('id')->comment('自增ID');
             $table->integer('password' )->unsigned()->default(0);
-            $table->string('bcrypt_password' )->default('');
+            $table->string('bcrypt_password',32 )->default('');
             $table->timestamps();
         });
     }

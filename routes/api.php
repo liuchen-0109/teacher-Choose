@@ -30,5 +30,7 @@ Route::post('/login','\App\Http\Controllers\ApiController@login');
 Route::post('/selectTeacher','\App\Http\Controllers\ApiController@selectTeacher');
 
 Route::group(['middleware'=>'web_api'],function(){
+    Route::post('/teacherList','\App\Http\Controllers\ApiController@teacherList');
+
 }
 );

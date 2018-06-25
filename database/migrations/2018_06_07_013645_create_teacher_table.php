@@ -36,7 +36,7 @@ class CreateTeacherTable extends Migration
             $table->unsignedTinyInteger('excellence')->default(0)->comment('专业');
             $table->unsignedTinyInteger('passion')->default(0)->comment('激情');
             $table->string('emergency_contact',150)->default('')->comment('紧急联系人');
-            $table->string('contact_mobile',150)->default('')->comment('联系人电话');
+            $table->string('contact_mobile',15)->default('')->comment('联系人电话');
             $table->string('address',255)->default('')->comment('详情住址');
             $table->enum('sex',['男','女'])->comment('性别');
             $table->unsignedTinyInteger('age')->default(0)->comment('年龄');

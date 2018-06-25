@@ -19,7 +19,7 @@ class CreateExcelTable extends Migration
             $table->integer('count' )->unsigned()->default(0)->comment('老师数量');
             $table->integer('year' )->unsigned()->default(2018)->comment('年份');
             $table->enum('season',['春季','暑期','秋季'] )->default('春季')->comment('学期');
-            $table->string('type',255 )->default('')->comment('学部');
+            $table->string('type',50 )->default('')->comment('学部');
             $table->tinyInteger('status')->unsigned()->default(1)->comment('状态，1启用 0禁用');
             $table->timestamps();
         });

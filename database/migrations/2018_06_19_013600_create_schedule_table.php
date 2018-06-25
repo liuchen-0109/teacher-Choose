@@ -20,7 +20,7 @@ class CreateScheduleTable extends Migration
             $table->string('campus_name' ,150)->default('')->comment('校区名');
             $table->string('remark' ,150)->default('')->comment('备注');
             $table->integer('year' )->unsigned()->default(2018)->comment('年份');
-            $table->string('type',255 )->default('')->comment('学部');
+            $table->string('type',50 )->default('')->comment('学部');
             $table->enum('is_teaching',['有课','无课'] )->default('有课')->comment('是否有课');
             $table->tinyInteger('time' )->unsigned()->default(0)->comment('上课时间');
             $table->tinyInteger('status')->unsigned()->default(1)->comment('状态，1启用 0禁用');

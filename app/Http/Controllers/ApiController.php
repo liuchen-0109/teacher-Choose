@@ -8,6 +8,7 @@ use App\Campus;
 use App\Excel;
 use App\Teacher;
 use App\Schedule;
+use App\ApiToken;
 
 class ApiController extends Controller
 {
@@ -138,15 +139,22 @@ class ApiController extends Controller
             $array2 = $this->getTeacherArray2($request['excel_md5'], $item, $timeArr, $request['campus_array']);
             $data[] = array_merge($array1, $array2);
         }
+        if (!count($data)) success_json([], '教师查询接口');
+
         $teacher_array = array();
         foreach ($data as $v) {
             foreach ($v as $item) {
-                if(!in_array($item,$teacher_array)) $teacher_array[] = $item;
+                if (!in_array($item, $teacher_array)) $teacher_array[] = $item;
             }
         }
         $field = ['name', 'college', 'experience_age', 'work_status', 'headimg_url', 'sex', 'id'];
-        $res = Teacher::whereIn('name',$teacher_array)->get($field);
-        return  $res;
+        $res = Teacher::whereIn('name', $teacher_array)->with('getSubject')->get($field);
+        if (!$res) success_json($res, '教师查询接口');
+        $res->map(function ($item) {
+            $item->experience_age = intval(date('Y', time()) - $item->experience_age) ?: 1;
+            return $item;
+        });
+        success_json($res, '教师查询接口');
     }
 
     /**
@@ -241,6 +249,8 @@ class ApiController extends Controller
                 $temp[1] = $str_arr[1] + 1;
                 $time3 = $temp;
                 return array(implode(',', $time2), $time, implode(',', $time3));
+            } else {
+                error_json('教师查询接口', '时间点数据有误');
             }
         } else {
             if ($str_arr[1] == 1) {
@@ -251,13 +261,16 @@ class ApiController extends Controller
                 $str_arr[1] = 4;
                 $time2 = $str_arr;
                 return array($time, implode(',', $time2));
-            } else {
+            } else if (1 < $str_arr[1] && $str_arr[1] < 5) {
                 $temp = $str_arr;
                 $temp[1] = $str_arr[1] - 1;
                 $time2 = $temp;
                 $temp[1] = $str_arr[1] + 1;
                 $time3 = $temp;
                 return array(implode(',', $time2), $time, implode(',', $time3));
+            } else {
+                error_json('教师查询接口', '时间点数据有误');
+
             }
         }
     }
@@ -284,12 +297,16 @@ class ApiController extends Controller
         return round($distance, $decimal);
     }
 
-    public function login(Request $request){
-        if(!$request['password']) error_json('登录验证','密码缺失',-1);
+    public function login(Request $request)
+    {
+        if (!$request['password']) error_json('登录验证', '密码缺失', -1);
         $password = AppPassword::first();
-        if(md5($request['password'])  != $password->bcrypt_password) error_json('登录验证','密码不正确',-1);
-        $token = md5('vip'. $_SERVER['REQUEST_TIME'].$request['password']);
-        session([$token => 1]);
-        success_json($token,'登录验证');
+        if (md5($request['password']) != $password->bcrypt_password) error_json('登录验证', '密码不正确', -1);
+        $token = md5('vip' . $_SERVER['REQUEST_TIME'] . $request['password']);
+        ApiToken::create([
+            'token' => $token,
+            'expire' => $_SERVER['REQUEST_TIME'] + 3600
+        ]);
+        success_json($token, '登录验证');
     }
 }

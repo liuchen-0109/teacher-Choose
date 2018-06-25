@@ -17,7 +17,7 @@ class CreatecampusCategoryTable extends Migration
             $table->increments('id')->comment('自增ID');
             $table->string('name','150')->default('')->comment('名称');
             $table->integer('pid')->unsigned()->default(0)->comment('上级ID');
-            $table->enum('type',['总部','大区','城市']);
+            $table->enum('type',['总部','大区','城市'])->comment('类型');
             $table->timestamps();
         });
     }
