@@ -71,6 +71,8 @@ class TeacherController extends Controller
             if(SubjectRelation::where('teacher_id','=',$request->id)->first()){
                 SubjectRelation::where('teacher_id','=',$request->id)->delete();
             }
+            $param['photos'] = $request['photos']?$request['photos']:'';
+            $param['voices'] = $request['voices']?$request['voices']:'';
             $res = $teacher->update($param);
             foreach($subject as $item){
                 SubjectRelation::create([

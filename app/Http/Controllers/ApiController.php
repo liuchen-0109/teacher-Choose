@@ -36,9 +36,12 @@ class ApiController extends Controller
         if (!$campus) error_json('校区列表接口');
         $campus_list = $campus->map(function ($item) use ($lat, $lng) {
             $item->distance = $this->get_distance(array($lng, $lat), array($item->lng, $item->lat));
+            $item->is_checked = false;
             return $item;
         });
-        return success_json($campus_list->sortBy('distance'), '校区列表接口');
+        $campus_list = $campus_list->sortBy('distance');
+        $campus_list =  $campus_list->values()->all();
+        return success_json($campus_list, '校区列表接口');
     }
 
     /**
@@ -112,10 +115,40 @@ class ApiController extends Controller
         $season1 = Schedule::where(['teacher_name' => $request['name'], 'status' => 1, 'season' => '春季', 'is_teaching' => '有课'])->get($field)->groupBy('year');
         $season2 = Schedule::where(['teacher_name' => $request['name'], 'status' => 1, 'season' => '暑期', 'is_teaching' => '有课'])->get($field)->groupBy('year');
         $season3 = Schedule::where(['teacher_name' => $request['name'], 'status' => 1, 'season' => '秋季', 'is_teaching' => '有课'])->get($field)->groupBy('year');
+
+
         $array = array();
-        if ($season1->isNotEmpty()) $array['春季'] = $season1;
-        if ($season2->isNotEmpty()) $array['暑期'] = $season2;
-        if ($season3->isNotEmpty()) $array['秋季'] = $season3;
+        if ($season1->isNotEmpty()){
+            $arr1 = array();
+            foreach($season1 as $k=>$v){
+                $arr1['title'] =  $v[0]['year'].$v[0]['season'];
+                $arr1['season'] =  $v[0]['season'];
+                $arr1['schedule'] =  $v->toArray();
+            }
+            $array[] = $arr1;
+        }
+        if ($season2->isNotEmpty()){
+            if ($season2->isNotEmpty()){
+                $arr2 = array();
+                foreach($season2 as $k=>$v){
+                    $arr2['title'] =  $v[0]['year'].$v[0]['season'];
+                    $arr2['season'] =  $v[0]['season'];
+                    $arr2['schedule'] =  $v->toArray();
+                }
+                $array[] = $arr2;
+            }
+        }
+        if ($season3->isNotEmpty()){
+            if ($season2->isNotEmpty()){
+                $arr3 = array();
+                foreach($season3 as $k=>$v){
+                    $arr3['title'] =  $v[0]['year'].$v[0]['season'];
+                    $arr3['season'] =  $v[0]['season'];
+                    $arr3['schedule'] =  $v->toArray();
+                }
+                $array[] = $arr3;
+            }
+        }
         if (!$array) error_json('教师课表接口');
         success_json($array, '教师课表接口');
     }
@@ -148,7 +181,11 @@ class ApiController extends Controller
             }
         }
         $field = ['name', 'college', 'experience_age', 'work_status', 'headimg_url', 'sex', 'id'];
-        $res = Teacher::whereIn('name', $teacher_array)->with('getSubject')->get($field);
+//        $res = Teacher::whereIn('name', $teacher_array)->with('getSubject')->get($field);
+        $collection = Teacher::whereIn('name', $teacher_array)->with('getSubject');
+        if ($request['style']) $collection = $collection->orderBy($request['style'], 'desc');
+        if ($request['ability']) $collection = $collection->orderBy($request['ability'], 'desc');
+        $res = $collection->get($field);
         if (!$res) success_json($res, '教师查询接口');
         $res->map(function ($item) {
             $item->experience_age = intval(date('Y', time()) - $item->experience_age) ?: 1;
